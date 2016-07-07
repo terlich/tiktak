@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">WannaTalk</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_phone_number">Phone Number</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Register</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">The password is invalid</string>
+    <string name="error_incorrect_password">Invalid Username or Password</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!-- Strings related to main_activity -->
+    <string name="title_who_is_available">Who is available?</string>
+
+    <!-- Strings related to welcome_activity -->
+    <string name="welcome_title"></string>
+    <string name="welcome_wannatalk_lets_go">WannaTalk?\nLet\'s Go…</string>
+</resources>
