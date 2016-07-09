@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     private View availableContactsView;
 
@@ -26,9 +26,9 @@ public class MainActivity extends FragmentActivity {
 //            TextView textView = new TextView(this);
 //            textView.setTextSize(40);
 //            textView.setText("TEst 12344");
-//
-//            RelativeLayout layout = (RelativeLayout) findViewById(R.id.availableContacts);
-//            layout.addView(textView);
+            ListView contactsView = (ListView) findViewById(R.id.contacts_list);
+            RelativeLayout layout = (RelativeLayout) findViewById(R.id.contacts_fragment);
+            layout.addView(contactsView);
 
         } else {
             Intent intentRegister = new Intent(this, RegisterActivity.class);

@@ -3,6 +3,10 @@ package com.tal.wannatalk;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -48,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "tal.erlichman@landesk.com:0522788738", "bar@example.com:world"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -57,9 +61,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private EditText mPhoneNumberView;
     private View mProgressView;
     private View mLoginFormView;
+
+    private Intent mainIntent;
+    private Activity _this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +76,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
-        //mPasswordView = (EditText) findViewById(R.id.password);
-//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-//                    attemptLogin();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        mPhoneNumberView = (EditText) findViewById(R.id.phoneNumber);
+        mPhoneNumberView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.register_btn || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.register_btn);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -91,6 +98,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //init the main intent for successful registration
+        //mainIntent = new Intent(this, MainActivity.class);
+        _this = this;
     }
 
     private void populateAutoComplete() {
@@ -149,19 +160,19 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
         // Reset errors.
         mEmailView.setError(null);
-        mPasswordView.setError(null);
+        mPhoneNumberView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String password = mPhoneNumberView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            mPhoneNumberView.setError(getString(R.string.error_invalid_password));
+            focusView = mPhoneNumberView;
             cancel = true;
         }
 
@@ -186,6 +197,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+
         }
     }
     private boolean isEmailValid(String email) {
@@ -331,10 +344,19 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             showProgress(false);
 
             if (success) {
+
+                //add the current tregisterd user to the sharedPreferences to keep it's state as registered
+                SharedPreferences sharedPref = _this.getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean(getString(R.string.is_registered), true);
+                editor.putString(getString(R.string.user_email), mEmail);
+                editor.putString(getString(R.string.user_phonenumber), mPassword);
+                editor.commit();
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                mPhoneNumberView.setError(getString(R.string.error_incorrect_password));
+                mPhoneNumberView.requestFocus();
             }
         }
 

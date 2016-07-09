@@ -1,7 +1,9 @@
 package com.tal.wannatalk;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -72,6 +74,8 @@ public class WelcomeActivity extends AppCompatActivity {
             hide();
         }
     };
+
+    private boolean isRegistered = false;
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
@@ -110,6 +114,11 @@ public class WelcomeActivity extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+        //get register state from private preferences
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        isRegistered = sharedPref.getBoolean(getString(R.string.is_registered), false);
     }
 
     @Override
@@ -130,7 +139,7 @@ public class WelcomeActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        boolean isRegistered = true;
+
         Intent intent = isRegistered ? new Intent(this, MainActivity.class) : new Intent(this, RegisterActivity.class);
         intent.putExtra(IS_REGISTERED, isRegistered);
         startActivity(intent);

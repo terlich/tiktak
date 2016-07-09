@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">WannaTalk</string>
 
+    <string name="preference_file_key">com.tal.wannatalk.PREFERENCE_FILE_KEY</string>
+    <string name="is_registered">com.tal.wannatalk.IS_REGISTERED</string>
+    <string name="user_email">com.tal.wannatalk.USER_EMAIL</string>
+    <string name="user_phonenumber">com.tal.wannatalk.USER_PHONENUMBER</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_phone_number">Phone Number</string>
@@ -20,4 +25,7 @@
     <!-- Strings related to welcome_activity -->
     <string name="welcome_title"></string>
     <string name="welcome_wannatalk_lets_go">WannaTalk?\nLet\'s Go…</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
