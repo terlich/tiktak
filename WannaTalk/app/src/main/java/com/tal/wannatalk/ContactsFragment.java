@@ -1,10 +1,10 @@
 package com.tal.wannatalk;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -17,10 +17,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import java.util.List;
+
 /**
  * Created by Tal on 07/07/2016.
  */
-public class ContactsFragment extends Fragment implements
+public class ContactsFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         AdapterView.OnItemClickListener {
 
@@ -97,7 +99,7 @@ public class ContactsFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment layout
-        return inflater.inflate(R.layout.contacts_fragment,
+        return inflater.inflate(R.layout.contact_list_fragment,
                 container, false);
     }
 
@@ -105,8 +107,7 @@ public class ContactsFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         // Gets the ListView from the View list of the parent activity
-        mContactsList =
-                (ListView) getActivity().findViewById(R.layout.contact_list_view);
+      mContactsList = (ListView) getActivity().findViewById(android.R.id.list);
         // Gets a CursorAdapter
         mCursorAdapter = new SimpleCursorAdapter(
                 getActivity(),
@@ -158,19 +159,39 @@ public class ContactsFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View item, int position, long rowID) {
-        // Get the Cursor
-        Cursor cursor = parent.getAdapter().getCursor();
-        // Move to the selected contact
-        cursor.moveToPosition(position);
-        // Get the _ID value
-        mContactId = getLong(CONTACT_ID_INDEX);
-        // Get the selected LOOKUP KEY
-        mContactKey = getString(CONTACT_KEY_INDEX);
-        // Create the contact's content Uri
-        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
+        System.out.println("ContactsFragment.onItemClick");
+//        // Get the Cursor
+//        Cursor cursor = parent.getAdapter().getCursor();
+//        // Move to the selected contact
+//        cursor.moveToPosition(position);
+//        // Get the _ID value
+//        mContactId = getLong(CONTACT_ID_INDEX);
+//        // Get the selected LOOKUP KEY
+//        mContactKey = getString(CONTACT_KEY_INDEX);
+//        // Create the contact's content Uri
+//        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
         /*
          * You can use mContactUri as the content URI for retrieving
          * the details for a contact.
          */
+    }
+
+    /**
+     * This interface must be implemented by any activity that loads this fragment. When an
+     * interaction occurs, such as touching an item from the ListView, these callbacks will
+     * be invoked to communicate the event back to the activity.
+     */
+    public interface OnContactsInteractionListener {
+        /**
+         * Called when a contact is selected from the ListView.
+         * @param contactUri The contact Uri.
+         */
+        public void onContactSelected(Uri contactUri);
+
+        /**
+         * Called when the ListView selection is cleared like when
+         * a contact search is taking place or is finishing.
+         */
+        public void onSelectionCleared();
     }
 }

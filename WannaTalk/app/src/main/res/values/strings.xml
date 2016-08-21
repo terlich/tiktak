@@ -25,7 +25,12 @@
     <!-- Strings related to welcome_activity -->
     <string name="welcome_title"></string>
     <string name="welcome_wannatalk_lets_go">WannaTalk?\nLet\'s Go…</string>
+    <string name="velocityupdater_msg">Started by service!!!</string>
+    <string name="velocityupdater_notify_title">Wanna Talk?</string>
+    <string name="velocityupdater_notify_msg">check out who is available to chat</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="no_contacts">No Contacts Found</string>
 </resources>

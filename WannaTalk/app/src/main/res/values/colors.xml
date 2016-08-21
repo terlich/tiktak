@@ -5,4 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!-- Define a standard holo blue color. Useful as we can refer to it from various other
+     resource files or even code and it only needs to be updated in one place if we wanted
+     to change it. -->
+    <color name="holo_blue">#FF33B5E5</color>
+
+
 </resources>

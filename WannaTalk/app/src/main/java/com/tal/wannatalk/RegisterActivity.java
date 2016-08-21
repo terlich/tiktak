@@ -354,6 +354,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 editor.putString(getString(R.string.user_phonenumber), mPassword);
                 editor.commit();
                 finish();
+                Intent intent = new Intent(_this, MainActivity.class);
+                startActivity(intent);
             } else {
                 mPhoneNumberView.setError(getString(R.string.error_incorrect_password));
                 mPhoneNumberView.requestFocus();
